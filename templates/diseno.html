@@ -1,0 +1,131 @@
+{% block title %}Prueba de Diseño{% endblock %}
+
+{% block content %}
+<div>
+    <h2>Prueba de Diseño</h2>
+    <div>
+        <div>
+            <form method="POST">
+                {% csrf_token %}
+                <div>
+                    <div>
+                        <label for="control_id">ID del Control</label>
+                        <input type="text" id="control_id" value="{{ control.id_control }}" disabled>
+                    </div>
+                    <div>
+                        <label for="control_name">Nombre Control</label>
+                        <input type="text" id="control_name" value="{{ control.nombre }}" disabled>
+                    </div>
+                </div>
+
+                <div>
+                    <div>
+                        <label for="control_code">Código Control</label>
+                        <input type="text" id="control_code" value="{{ control.codigo }}" disabled>
+                    </div>
+                    <div>
+                        <label for="control_tipologia">Tipología Control</label>
+                        <input type="text" id="control_tipologia" value="{{ control.tipologia }}" disabled>
+                    </div>
+                    <div>
+                        <label for="control_frequency">Frecuencia Control</label>
+                        <input type="text" id="control_frequency" value="{{ control.frecuencia }}" disabled>
+                    </div>
+                </div>
+
+                <div>
+                    <div>
+                        <label for="control_classification">Clasificación Control</label>
+                        <input type="text" id="control_classification" value="{{ control.clasificacion }}" disabled>
+                    </div>
+                    <div>
+                        <label for="control_description_risk">Descripción Riesgo</label>
+                        <textarea id="control_description_risk" rows="3" disabled>{{ control.descripcion_riesgo }}</textarea>
+                    </div>
+                </div>
+
+                <div>
+                    <div>
+                        <label for="control_preventive">Preventivo Detectivo</label>
+                        <input type="text" id="control_preventive" value="{{ control.naturaleza }}" disabled>
+                    </div>
+                </div>
+
+                <div>
+                    <div>
+                        <label for="control_objective">Objetivo del Control</label>
+                        <textarea id="control_objective" rows="3" disabled>{{ control.objetivo }}</textarea>
+                    </div>
+                </div>
+
+                <div>
+                    <div>
+                        <label for="control_description">Descripción Control</label>
+                        <textarea id="control_description" rows="5" disabled>{{ control.descripcion_control }}</textarea>
+                    </div>
+                </div>
+
+                <h2>Ingresa aquí tu información</h2>
+
+                <div>
+                    <div>
+                        <label for="execution_date">Fecha ejecución de la prueba</label>
+                        <input type="date" id="execution_date" name="execution_date" value="{% if prueba %}{{ prueba.fecha_ejecucion|date:'Y-m-d' }}{% else %}{% endif %}" required>
+                    </div>
+                </div>
+
+                <div>
+                    <div>
+                        <label for="prueba_ejecutante">Ejecutante de la Prueba</label>
+                        <textarea id="prueba_ejecutante" rows="3" name="prueba_ejecutante" required>{% if prueba %}{{ prueba.ejecutante }}{% else %}{% endif %}</textarea>
+                    </div>
+                </div>
+
+                <div>
+                    <div>
+                        <label for="prueba_comentarios">Comentarios sobre prueba de recorrido</label>
+                        <textarea id="prueba_comentarios" rows="3" name="prueba_comentarios" required>{% if prueba %}{{ prueba.comentario_recorrido }}{% else %}{% endif %}</textarea>
+                    </div>
+                </div>
+
+                <div>
+                    <div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Validaciones de Diseño</th>
+                                    <th>Respuesta</th>
+                                    <th>Explicación</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for respuesta in respuestas %}
+                                <tr>
+                                    <td>
+                                        <textarea rows="5" readonly>{{ respuesta.id_pregunta.texto }}</textarea>
+                                    </td>
+                                    <td>
+                                        <select name="respuesta_{{ forloop.counter }}" required>
+                                            <option value="si" {% if respuesta.respuesta == 'si' %}selected{% endif %}>Sí</option>
+                                            <option value="no" {% if respuesta.respuesta == 'no' %}selected{% endif %}>No</option>
+                                            <option value="noaplica" {% if respuesta.respuesta == 'noaplica' %}selected{% endif %}>No Aplica</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="explicacion_{{ forloop.counter }}" value="{% if respuesta.explicacion %}{{ respuesta.explicacion }}{% else %}{% endif %}" required>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit">Guardar</button>
+                    <a href="{% url 'principal' %}">Volver a la Lista de Controles</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

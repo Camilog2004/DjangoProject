@@ -1,0 +1,52 @@
+{% block title %}Controles{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Listado de Controles</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Control</th>
+                <th>Código Control</th>
+                <th>Estado Control</th>
+                <th>Ciclo Compañía</th>
+                <th>Seleccionar 1</th>
+                <th>Seleccionar 2</th>
+                <th>Conclusión Pruebas</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if controles %}
+                {% for control in controles %}
+                    <tr>
+                        <td>{{ control.id_control }}</td> 
+                        <td>{{ control.nombre }}</td> 
+                        <td>{{ control.codigo }}</td> 
+                        <td>Estado: {{ control.id_estado.estado }}</td> 
+                        <td>
+                            <p>Ciclo: {{ control.ciclo }}</p>
+                            <p>Compañía: {{ control.compania }}</p>
+                        </td>
+                        <td>
+                            <button><a href="{% url 'encabezado' control.id_control %}">Encabezado</a></button>
+                            <button><a href="{% url 'diseno' control.id_control %}">Diseño</a></button>
+                            <button>Operatividad</button>
+                        </td>
+                        <td>
+                            <button>Ipe's</button>
+                            <button>Euc's</button>
+                            <button>Brecha</button>
+                        </td>
+                        <td>Diseño: {{ control.conclusion_diseno }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="8">No se encontraron controles</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

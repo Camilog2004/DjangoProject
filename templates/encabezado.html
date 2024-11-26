@@ -1,0 +1,103 @@
+{% block title %}Encabezado del control{% endblock %}
+
+{% block content %}
+<div>
+    <h2>Encabezado del control</h2>
+    <div>
+        <form method="POST">
+            {% csrf_token %}
+            <!-- Sección de Información del Control -->
+            <div>
+                <div>
+                    <label for="control_id">ID del Control</label>
+                    <input type="text" id="control_id" value="{{ control.id_control }}" disabled>
+                </div>
+                <div>
+                    <label for="control_type">Tipo de Control</label>
+                    <input type="text" id="control_type" value="{{ control.tipologia }}" disabled>
+                </div>
+                <div>
+                    <label for="control_classification">Clasificación del Control</label>
+                    <input type="text" id="control_classification" value="{{ control.clasificacion }}" disabled>
+                </div>
+                <div>
+                    <label for="control_company">Compañía</label>
+                    <input type="text" id="control_company" value="{{ control.compania }}" disabled>
+                </div>
+                <div>
+                    <label for="control_objective">Objetivo del Control</label>
+                    <textarea id="control_objective" rows="3" disabled>{{ control.objetivo }}</textarea>
+                </div>
+                <div>
+                    <label for="control_nature">Naturaleza del Control</label>
+                    <input type="text" id="control_nature" value="{{ control.naturaleza }}" disabled>
+                </div>
+                <div>
+                    <label for="control_supervisor">Supervisor</label>
+                    <input type="text" id="control_supervisor" value="{{ control.supervisor }}" disabled>
+                </div>
+                <div>
+                    <label for="control_codigo">Código del control</label>
+                    <input type="text" id="control_codigo" value="{{ control.codigo }}" disabled>
+                </div>
+                <div>
+                    <label for="control_subprocess">Subproceso</label>
+                    <input type="text" id="control_subprocess" value="{{ control.id_subproceso }}" disabled>
+                </div>
+                <div>
+                    <label for="control_cycle">Ciclo</label>
+                    <input type="text" id="control_cycle" value="{{ control.ciclo }}" disabled>
+                </div>
+                <div>
+                    <label for="control_name">Nombre del Control</label>
+                    <input type="text" id="control_name" value="{{ control.nombre }}" disabled>
+                </div>
+                <div>
+                    <label for="control_frequency">Frecuencia del Control</label>
+                    <input type="text" id="control_frequency" value="{{ control.frecuencia }}" disabled>
+                </div>
+                <div>
+                    <label for="control_risk_description">Descripción del Riesgo</label>
+                    <textarea id="control_risk_description" rows="3" disabled>{{ control.descripcion_riesgo }}</textarea>
+                </div>
+                <div>
+                    <label for="control_description">Descripción del Control</label>
+                    <textarea id="control_description" rows="5" disabled>{{ control.descripcion_control }}</textarea>
+                </div>
+            </div>
+
+            <!-- Sección de Información de Elaboración -->
+            <h2>Ingresa aquí tu información</h2>
+            <div>
+                <div>
+                    <label for="control_creation_date">Fecha de Elaboración</label>
+                    <input type="date" id="control_creation_date" name="control_creation_date" value="{{ control.fecha_elaboracion|date:'Y-m-d' }}" required>
+                </div>
+                <div>
+                    <label for="control_status">Estado</label>
+                    <select id="control_status" name="control_status" required>
+                        <option value="Sin iniciar" {% if control.estado == 'Sin iniciar' %}selected{% endif %}>Sin iniciar</option>
+                        <option value="En proceso" {% if control.estado == 'En proceso' %}selected{% endif %}>En proceso</option>
+                        <option value="Terminado" {% if control.estado == 'Terminado' %}selected{% endif %}>Terminado</option>
+                        <option value="No evaluado" {% if control.estado == 'No evaluado' %}selected{% endif %}>No evaluado</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="control_total_hours">Total de Horas Invertidas</label>
+                    <input type="number" id="control_total_hours" name="control_total_hours" min="0" required>
+                </div>
+                <div>
+                    <label for="control_resources">Recursos Consultados</label>
+                    <textarea id="control_resources" rows="3" name="control_resources" required></textarea>
+                </div>
+            </div>
+
+            <!-- Botones -->
+            <div>
+                <button type="submit">Guardar</button>
+                <a href="{% url 'principal' %}">Volver a la Lista de Controles</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
